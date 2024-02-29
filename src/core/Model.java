@@ -11,15 +11,15 @@ import java.text.SimpleDateFormat;
 public class Model {
     public void writeToFile(String[] parameters) throws NotCorrectDate {
         checkParameters(parameters);
-        try(FileWriter writer = new FileWriter("test.txt")){
+        try(FileWriter writer = new FileWriter(parameters[0] + ".txt", true)){
             StringBuilder sb = new StringBuilder();
-            sb.append("ФИО ").append(parameters[0] + " ").append(parameters[1] + " ").append(parameters[2] + "\n");
-            sb.append("Дата рождения" + parameters[3] + "\n");
-            sb.append("Номер телефона" + parameters[4] + "\n");
+            sb.append(parameters[0] + " ").append(parameters[1] + " ").append(parameters[2] + " ");
+            sb.append(parameters[3] + " ");
+            sb.append(parameters[4] + " ");
             if (parameters[5].equals("f")){
-                sb.append("Пол: женский");
+                sb.append("женский\n");
             }else{
-                sb.append("Пол: мужской");
+                sb.append("мужской\n");
             }
             writer.write(sb.toString());
             writer.flush();
@@ -29,10 +29,10 @@ public class Model {
     }
 
     private void checkParameters(String[] parameters) throws NotCorrectDate {
-        if (!parameters[5].equals("f") || !parameters[5].equals("m")){
+        if (!parameters[5].equals("f") && !parameters[5].equals("m")){
             throw new NotCorrectDate("Некорректное значение пола. Допустимые значения только f или m");
         }
-        if (!parameters[4].equals("+")){
+        if (parameters[4].contains("+")){
             throw new NotCorrectDate("Телефон содержит знак +");
         }
         try{

@@ -10,15 +10,22 @@ import java.io.InputStreamReader;
 public class UserView {
     private Controller controller;
 
+    public UserView(Controller controller) {
+        this.controller = controller;
+    }
+
     public void run(){
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))){
             while(true){
-                System.out.println("Введите следующие данные через пробел: Фамилия Имя Отчество дата _ рождения номер _ телефона пол");
+                System.out.print("Введите следующие данные через пробел: Фамилия Имя Отчество дата_рождения номер_телефона пол. ");
+                System.out.println("Или введите exit для выхода");
                 String date = reader.readLine();
                 try{
+                    if (date.equals("exit")){
+                        break;
+                    }
                     String[] parameters = checkCountOfParametrs(date);
                     controller.writeDates(parameters);
-                    break;
                 }catch (NotCorrectCountOfParametrs | NotCorrectDate e){
                     System.err.println(e);
                 }
